@@ -15,6 +15,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Year</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +25,9 @@
                 <td>@movie.Id</td>
                 <td>@movie.Name</td>
                 <td>@movie.Year</td>
+                <td>
+                    <a class="btn btn-outline-secondary" asp-page="edit" asp-route-id="@movie.Id">Edit</a>
+                </td>
             </tr>
         }
 
