@@ -9,19 +9,11 @@ namespace MyApp
 {
     public class IndexModel : PageModel
     {
-        public async Task<IActionResult> OnGet()
+        public void OnGet()
         {
-
-            await LongRunningProccess();
-
-            return Page();
+          
         }
 
-        private async Task LongRunningProccess()
-        {
-            await Task.Delay(3000);
-
-            throw new Exception("Error!");
-        }
+       
     }
 }
