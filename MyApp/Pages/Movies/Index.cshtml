@@ -1,0 +1,30 @@
+﻿@page
+@model MyApp.Pages.Movies.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Movie List</h1>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Year</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model.MovieList)
+        {
+            <tr>
+                <td>@movie.Id</td>
+                <td>@movie.Name</td>
+                <td>@movie.Year</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
