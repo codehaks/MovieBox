@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyApp.Common;
 
 namespace MyApp
 {
@@ -12,9 +13,9 @@ namespace MyApp
         {
 
             services.AddControllers();
-
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
+            services.AddLiteDb(@"movies.db");
 
         }
 
