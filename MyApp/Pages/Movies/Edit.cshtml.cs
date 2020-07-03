@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MongoDB.Driver;
 using MyApp.Models;
 
 namespace MyApp.Pages.Movies
@@ -15,10 +16,11 @@ namespace MyApp.Pages.Movies
 
         public void OnGet(int id)
         {
-            using var db = new LiteDB.LiteDatabase("movies.db");
-            var movies = db.GetCollection<Movie>();
-
-            Movie = movies.FindById(id);
+            var client = new MongoClient("mongodb://localhost:27017");
+            var db = client.GetDatabase("movieBoxDb");
+            var movies = db.GetCollection<Movie>("movies");
+            var filter = Builders<Movie>.Filter.Eq(e => e.Id, id);
+            Movie = movies.Find(filter).First();
         }
 
         public IActionResult OnPost()
