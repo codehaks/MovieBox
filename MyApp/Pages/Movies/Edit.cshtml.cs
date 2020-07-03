@@ -19,16 +19,18 @@ namespace MyApp.Pages.Movies
             var client = new MongoClient("mongodb://localhost:27017");
             var db = client.GetDatabase("movieBoxDb");
             var movies = db.GetCollection<Movie>("movies");
-            var filter = Builders<Movie>.Filter.Eq(e => e.Id, id);
-            Movie = movies.Find(filter).First();
+
+            Movie = movies.Find(m => m.Id == Movie.Id).First();
         }
 
         public IActionResult OnPost()
         {
-            using var db = new LiteDB.LiteDatabase("movies.db");
 
-            var movies = db.GetCollection<Movie>();
-            movies.Update(Movie);
+            var client = new MongoClient("mongodb://localhost:27017");
+            var db = client.GetDatabase("movieBoxDb");
+            var movies = db.GetCollection<Movie>("movies");
+
+            movies.ReplaceOne(m => m.Id == Movie.Id, Movie);
 
             return RedirectToPage("Index");
         }
