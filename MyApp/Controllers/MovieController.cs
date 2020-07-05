@@ -25,5 +25,18 @@ namespace MyApp.Controllers
 
             return Ok(movieList);
         }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] Movie model)
+        {
+            var client = new MongoClient("mongodb://localhost:27017");
+            var db = client.GetDatabase("mymoviesdb");
+            var movies = db.GetCollection<Movie>("movies");
+
+            movies.InsertOne(model);
+
+            return Ok();
+        }
+      
     }
 }
