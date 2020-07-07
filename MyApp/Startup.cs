@@ -12,7 +12,8 @@ namespace MyApp
         {
 
             services.AddControllers();
-            services.AddRazorPages();
+            services.AddRazorPages()
+                .AddRazorRuntimeCompilation();
 
         }
 

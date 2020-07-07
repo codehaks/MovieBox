@@ -8,15 +8,99 @@
 
 <div id="app">
 
+    <div class="card border-primary">
+        <div class="card-header">
+            Add New Movie
+        </div>
+        <div class="card-body">
+            <input v-model="name" name="Name" placeholder="Name" class="form-control" />
+            <input v-model="year" name="Year" placeholder="Year" class="form-control" />
+
+            <button class="btn btn-primary" v-on:click="addMovie"> Add</button>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr v-for="(item,index) in movieList">
+                <td>
+                    {{index+1}}
+                </td>
+                <td>
+                    {{item.name}}
+                </td>
+                <td> {{item.year}}</td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
 
-@section scripts{ 
+@section scripts{
 
-<script>
+    <script>
 
-    var app = new Vue({
-        el:"#app"
-    })
+        var app = new Vue({
+            el: "#app",
+            data: {
+                movieList: [],
+                name: "",
+                year: null   
+            },
+            mounted: function () {
+                console.log("Mouted");
+                this.getMovieList();
+            },
 
-</script>
+            methods: {
+                addMovie: function () {
+                    var vm = this;
+
+                    var newMovie = {
+                        name: vm.name,
+                        year: vm.year
+                    }
+
+                    vm.movieList.splice(0, 0, newMovie);
+
+                    $.ajax({
+                        url: "/api/movie",
+                        data: newMovie,
+                        dataType: 'json',
+                        method: "POST",
+                        type:"POST"
+                        
+                    }).done(function () {
+                        vm.name = "";
+                        vm.year = null;
+
+                        console.log("new movie saved.");
+                    });
+
+                
+                },
+                getMovieList: function () {
+                    console.log("Getting Movie List");
+
+                    var vm = this;
+
+                    $.ajax({ url: "/api/movie", method: "GET" })
+                        .done(function (data) {
+                            vm.movieList = data;
+                            console.table(data);
+                        })
+
+                }
+            }
+        });
+
+    </script>
 }
