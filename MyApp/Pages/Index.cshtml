@@ -69,20 +69,20 @@
                         year: vm.year
                     }
 
-                    vm.movieList.splice(0, 0, newMovie);
+                    vm.movieList.splice(0, 0, newMovie);     
 
                     $.ajax({
                         url: "/api/movie",
-                        data: newMovie,
-                        dataType: 'json',
                         method: "POST",
-                        type:"POST"
-                        
+                        contentType:"application/json",
+                        data: JSON.stringify(newMovie)
                     }).done(function () {
-                        vm.name = "";
-                        vm.year = null;
+                        console.log("done");
 
-                        console.log("new movie saved.");
+                    }).fail(function () {
+                        console.log("fail");
+                    }).always(function () {
+                        console.log("always");
                     });
 
                 
