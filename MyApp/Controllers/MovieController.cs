@@ -13,15 +13,21 @@ namespace MyApp.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
+        public IMongoCollection<Movie> Movies { get; }
+
+        public MovieController()
+        {
+            var client = new MongoClient("mongodb://localhost:27017");
+            var db = client.GetDatabase("mymoviesdb");
+            Movies = db.GetCollection<Movie>("movies");
+        }
         //api/movie
         [HttpGet]
         public IActionResult Get()
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var db = client.GetDatabase("mymoviesdb");
-            var movies = db.GetCollection<Movie>("movies");
 
-            var movieList = movies.Find(FilterDefinition<Movie>.Empty).ToList();
+
+            var movieList = Movies.Find(FilterDefinition<Movie>.Empty).ToList();
 
             return Ok(movieList);
         }
@@ -29,14 +35,16 @@ namespace MyApp.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Movie model)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var db = client.GetDatabase("mymoviesdb");
-            var movies = db.GetCollection<Movie>("movies");
-
-            movies.InsertOne(model);
-
+            Movies.InsertOne(model);
             return Ok();
         }
-      
+
+        [HttpDelete] // REST
+        public IActionResult Remove([FromBody] Movie model)
+        {
+            Movies.DeleteOne(m => m.Id == model.Id);
+            return Ok();
+        }
+
     }
 }
