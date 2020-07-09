@@ -46,5 +46,12 @@ namespace MyApp.Controllers
             return Ok();
         }
 
+        [HttpPut]
+        public IActionResult Update([FromBody] Movie model)
+        {
+            Movies.ReplaceOne(m => m.Id == model.Id, model);
+            return Ok();
+        }
+
     }
 }
