@@ -44,8 +44,12 @@
 
 </div>
 
-@section scripts{
+@section styles{ 
+    <link href="~/lib/toastr/toastr.css" rel="stylesheet" />
+}
 
+@section scripts{
+    <script src="~/lib/toastr/toastr.min.js"></script>
     <script>
 
         var app = new Vue({
@@ -69,8 +73,6 @@
                         year: vm.year
                     }
 
-                    vm.movieList.splice(0, 0, newMovie);     
-
                     $.ajax({
                         url: "/api/movie",
                         method: "POST",
@@ -78,11 +80,14 @@
                         data: JSON.stringify(newMovie)
                     }).done(function () {
                         console.log("done");
+                        vm.movieList.splice(0, 0, newMovie);  
+                        toastr.success("Movie added.");
 
                     }).fail(function () {
-                        console.log("fail");
+                        toastr.error("Error!");
                     }).always(function () {
-                        console.log("always");
+                        vm.name = "";
+                        vm.year = null;
                     });
 
                 
