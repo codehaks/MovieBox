@@ -4,7 +4,8 @@
     ViewData["Title"] = "Home";
 }
 
-<h1>MyApp</h1>
+<h1>Movie Box</h1>
+<hr />
 
 <div id="app">
 
@@ -17,7 +18,7 @@
         <div class="card-body">
             <input v-model="name" name="Name" placeholder="Name" class="form-control" />
             <input v-model="year" name="Year" placeholder="Year" class="form-control" />
-
+            <br />
             <button class="btn btn-primary" v-on:click="addMovie" v-if="!editMode"> Add</button>
             <button class="btn btn-secondary" v-on:click="updateMovie" v-if="editMode"> Update</button>
             <button class="btn btn-outline-primary" v-on:click="cancelEditMovie" v-if="editMode"> Cancel</button>
