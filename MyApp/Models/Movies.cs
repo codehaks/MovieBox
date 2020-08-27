@@ -10,5 +10,7 @@ namespace MyApp.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Year { get; set; }
+
+        public IList<Comment> Comments { get; set; }
     }
 }

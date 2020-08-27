@@ -1,0 +1,19 @@
+﻿@page
+@model MyApp.Pages.Movies.DetailsModel
+@{
+}
+
+<h1>@Model.Movie.Name</h1>
+<hr />
+<p>@Model.Movie.Year</p>
+
+<hr />
+<h3>Comments</h3>
+
+@foreach (var comment in Model.Movie.Comments)
+{
+    <p>
+        @comment.Body
+    </p>
+    <hr />
+}
